@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class MemberController(
@@ -19,7 +20,7 @@ class MemberController(
         val deleteMemberService: DeleteMemberService
 ) {
 
-    @PostMapping("/members/join")
+    @PostMapping("/members")
     fun join(@RequestBody req: JoinMemberRequest): ResponseEntity<Any?> {
         val joinResponse: JoinResponse = joinMemberService.joinMember(
                 JoinCommand(
@@ -44,8 +45,8 @@ class MemberController(
         )
     }
 
-    @DeleteMapping("/members/withdraw")
-    fun join(@RequestBody memberId: String): ResponseEntity<Any> {
+    @DeleteMapping("/members")
+    fun delete(@RequestParam(required = true) memberId: String): ResponseEntity<Any> {
         val deleteMemberResponse = deleteMemberService.deleteMember(memberId)
 
         return ResponseEntity.ok(
