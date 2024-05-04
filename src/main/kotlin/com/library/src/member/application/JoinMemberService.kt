@@ -1,7 +1,7 @@
 package com.library.src.member.application
 
 import com.library.src.member.application.model.JoinCommand
-import com.library.src.member.application.model.JoinMemberResponse
+import com.library.src.member.application.model.JoinResponse
 import com.library.src.member.domain.Member
 import com.library.src.member.domain.MemberRepository
 import org.springframework.stereotype.Service
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class JoinMemberService(
     private val memberRepository: MemberRepository
 ) {
-    fun joinMember(cmd: JoinCommand): JoinMemberResponse {
+    fun joinMember(cmd: JoinCommand): JoinResponse {
         val member = Member(
             memberId = cmd.memberId,
             password = cmd.password,
@@ -22,7 +22,7 @@ class JoinMemberService(
 
         val saveMember: Member = memberRepository.save(member)
 
-        return JoinMemberResponse(
+        return JoinResponse(
             memberId = saveMember.memberId,
             name = saveMember.name,
             grade = saveMember.grade,
