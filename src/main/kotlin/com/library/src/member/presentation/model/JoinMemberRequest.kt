@@ -2,7 +2,7 @@ package com.library.src.member.presentation.model
 
 import com.library.src.member.domain.Grade
 
-class JoinMemberRequest(
+data class JoinMemberRequest(
     val memberId: String,
     val password: String,
     val email: String,
