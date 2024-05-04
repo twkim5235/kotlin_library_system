@@ -1,19 +1,22 @@
 package com.library.src.member.presentation
 
+import com.library.src.member.application.DeleteMemberService
 import com.library.src.member.application.JoinMemberService
 import com.library.src.member.application.model.JoinCommand
-import com.library.src.member.application.model.JoinMemberResponse
 import com.library.src.member.application.model.JoinResponse
+import com.library.src.member.presentation.model.DeleteMemberResponse
 import com.library.src.member.presentation.model.JoinMemberRequest
 import com.library.src.member.presentation.model.JoinMemberResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 
 @Controller
 class MemberController(
-    val joinMemberService: JoinMemberService
+        val joinMemberService: JoinMemberService,
+        val deleteMemberService: DeleteMemberService
 ) {
 
     @PostMapping("/members/join")
@@ -37,6 +40,19 @@ class MemberController(
                         studentId = joinResponse.studentId,
                         grade = joinResponse.grade,
                         "회원가입이 정상적으로 완료되었습니다."
+                )
+        )
+    }
+
+    @DeleteMapping("/members/withdraw")
+    fun join(@RequestBody memberId: String): ResponseEntity<Any> {
+        val deleteMemberResponse = deleteMemberService.deleteMember(memberId)
+
+        return ResponseEntity.ok(
+                DeleteMemberResponse(
+                        deleteMemberResponse.memberId,
+                        deleteMemberResponse.name,
+                        "회원탈퇴가 정상적으로 완료되었습니다."
                 )
         )
     }
